@@ -39,3 +39,17 @@ pub fn fmt_u64(dest: &mut [u8; 32], x: u64) -> usize {
         index
     }
 }
+
+#[inline(never)]
+pub fn fmt_u64_simple(dest: &mut [u8; 32], mut x: u64) -> usize {
+    let mut i = 0;
+    while x != 0 {
+        dest[i] = b'0' + (x % 10) as u8;
+        x /= 10;
+        i += 1;
+    }
+    for j in 0..(i / 2) {
+        dest.swap(j, i - j - 1);
+    }
+    i
+}
