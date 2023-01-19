@@ -11,6 +11,25 @@ fn large_number_fast(criterion: &mut Criterion) {
     });
 }
 
+fn large_number_nolut(criterion: &mut Criterion) {
+    criterion.bench_function("print 4839532111234523", |bencher| {
+        let mut dest = [0; 32];
+        bencher.iter(|| {
+            fast_itoa::fmt_u64_nolut(&mut dest, criterion::black_box(4839532111234523));
+        })
+    });
+}
+
+
+fn large_number_nosimd(criterion: &mut Criterion) {
+    criterion.bench_function("print 4839532111234523", |bencher| {
+        let mut dest = [0; 32];
+        bencher.iter(|| {
+            fast_itoa::fmt_u64_nosimd(&mut dest, criterion::black_box(4839532111234523));
+        })
+    });
+}
+
 fn large_number_simple(criterion: &mut Criterion) {
     criterion.bench_function("print 4839532111234523", |bencher| {
         let mut dest = [0; 32];
@@ -20,5 +39,11 @@ fn large_number_simple(criterion: &mut Criterion) {
     });
 }
 
-criterion_group!(benches, large_number_fast, large_number_simple);
+criterion_group!(
+    benches,
+    large_number_fast,
+    large_number_nolut,
+    large_number_nosimd,
+    large_number_simple
+);
 criterion_main!(benches);
