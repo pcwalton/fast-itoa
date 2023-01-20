@@ -7,11 +7,11 @@ crate-type = "lib"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-bytemuck = "1"
-smartstring = "1"
+libc = "0.2"
 
 [dev-dependencies]
 criterion = "0.4"
+proptest = "1"
 
 [[bench]]
 name = "benchmark"
